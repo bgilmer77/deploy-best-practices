@@ -1,0 +1,41 @@
+digraph resource_fsm_complex {
+  concentrate=true
+  edge [arrowsize=1]
+
+  start -> registered
+
+  registered -> available
+  registered -> retired
+  registered -> error
+
+  available -> allocated
+  available -> retired
+  available -> offline
+  available -> reserved
+
+  reserved -> available
+  reserved -> allocated
+  reserved -> retired
+  reserved -> offline
+
+  offline -> available
+  offline -> retired
+
+  allocated -> deployed
+  allocated -> available
+  allocated -> error
+
+  deployed -> released
+
+  released -> available
+  released -> retired
+  released -> error
+
+  error -> registered
+  error -> allocated
+  error -> released
+  error -> offline
+  error -> retired
+
+  retired -> end
+}
