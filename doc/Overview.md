@@ -59,9 +59,9 @@ These recomendations conform to [AMWA BCP-003](https://amwa-tv.github.io/nmos-ap
  * SSH access secured by OAuth2 user authorization
  * SSH access secured by SSH-authorized keys
  * X.509 certificate support for SSH-key authorization
-
-IaC tooling also may require SSH access to servers which is outside.
-   
+ 
+IaC tooling normal requires SSH access to the systems under configuration. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH authorization. Note that some, but not all, SSH implementations support X.509 certificates. This provides system administors the opportunity for uniform key management and sharing of keys used for HTTPS configuration.
+    
 *__TODO traditional SSH authorized_key sharing has security problems. Study SSH certificates including X.509 support.__*
 *__TODO - Consider update of BCP-0003 to include service account recommendations.__*
 
