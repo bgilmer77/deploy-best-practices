@@ -16,26 +16,22 @@ Resource deployment is represented using a simple life-cycle state model. Transi
 ![state model](images/resource-state-model.png)
 <br>*Resource deployment conceptual state model.*
 
-| State | Description |
-|---|---|
-|registered | Resource existance and identify is recorded. |
-|available | Resource is ready for allocation to production. |
-|allocated| Resource is assigned to production and is scheduled to be configured. |
-|deployed| Resource is configured and in production. |
-|released| Resource is no longer active in production. |
-|retired | Resource is ready to be removed from facility. |
 
 | State | Description |
 |---|---|
-|registered | Resource existance and identify is recorded. |
-|available | Resource is ready for allocation to production. |
-|allocated| Resource is assigned to production and is scheduled to be deployed. |
-|deployed| Resource is in a known states (e.g. OS installed, pathed to know level, minimal admin network config). |
-|configured| Resource is configured and in production, e.g. media device ready to be tested, with *role* with assigned names, active media interfaces. |
-|ready| Resources is accepted for production. |
+|registered | Resource existance and identity is recorded. |
+|available | Resource is available for allocation to production. |
+|allocated| Resource is allocated to production and scheduled for staging. |
+|staged| Resource is initialized and prepared for final configuration.|
+|configured| Resource is configured and ready for production acceptance. |
+|accepted| Resources is accepted and in use for production. |
 |released| Resource is no longer active in production. |
 |retired | Resource is ready to be removed from facility. |
 
+<!--
+|staged| Resource is initialized and ready for configuration.| Firware configured, OS installed, initial network configuration. |
+|configured| Resource is configured and in production, e.g. media device role assigned, name assigned, active media interfaces, ready to be tested. |
+-->
 
 ## Generic Resource Deployment
 
