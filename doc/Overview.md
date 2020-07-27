@@ -25,6 +25,18 @@ Resource deployment is represented using a simple life-cycle state model. Transi
 |released| Resource is no longer active in production. |
 |retired | Resource is ready to be removed from facility. |
 
+| State | Description |
+|---|---|
+|registered | Resource existance and identify is recorded. |
+|available | Resource is ready for allocation to production. |
+|allocated| Resource is assigned to production and is scheduled to be deployed. |
+|deployed| Resource is in a known states (e.g. OS installed, pathed to know level, minimal admin network config). |
+|configured| Resource is configured and in production, e.g. media device ready to be tested, with *role* with assigned names, active media interfaces. |
+|ready| Resources is accepted for production. |
+|released| Resource is no longer active in production. |
+|retired | Resource is ready to be removed from facility. |
+
+
 ## Generic Resource Deployment
 
 Deployment processing can be thought of as simply finite state machine where deployment tasks are completed by the transitions from one state to the next. Succesful execution of a transition moves the resource to the next life cycle state. The following diagram identifies typical tasks that are completed during transitions in order to move a resource through its deployment life cycle.
