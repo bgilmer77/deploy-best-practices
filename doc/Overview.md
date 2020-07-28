@@ -117,14 +117,14 @@ The following diagrams maps typical MaaS server configuration operations onto th
 
 ### Separate Admin and Production Networks
 
-MaaS systems use a server's system manage controller to configure, monitor, and control the server via IPMI. These interfaces are typcally confiugred on a dedicated amdministrator network that is separate from production networks. In addition, network interfaces are configured for admin network PXE boot, automated OS install, and IaC configuration. Configuring a server's production network interfaces is the responsiblity of IaC processing. An individual server's network configuration happens in conjuction with configuration of dependant network services (switches, ports, etc). A fully automated deploy system requires no manual human configuration of production servers, or production network services. In a media environment this automated configuration may included video switch configuration.
+MaaS systems use a server's system manage controller to configure, monitor, and control the server via IPMI. These interfaces are typcally confiugred on a dedicated amdministrator network that is separate from production networks. In addition, network interfaces are configured for admin network PXE boot, automated OS install, and IaC configuration. Configuring a server's production network interfaces is the responsiblity of IaC processing. An individual server's network configuration happens in conjuction with configuration of dependant network services (switches, ports, etc). A fully automated deploy system requires no manual human configuration of production servers, or production network services.
 
 ![overview](images/deploy-network-overview.png)
 *Independent admin and production network.*
 
 ## Resource Deployment State Model - Network Swith Port Example
 
-Incorrporation of network configuration in IaC deployment methodologies is becoming possible. See, for example, [CBC's implementation of IaC configuration of Embrionix emsfp EB22 modules using Ansilbe playbooks](https://github.com/cbcrc/ansible-embrionix). The opens the possiblity of treating network switches, and individual network ports, as resources that can be managed as part of production deployment and provisioning system. A resource model instantiation that might implement this is shown below.
+Implementation of network configuration using IaC deployment methodologies is enabled by network switch and port interfaces that support automated configuration. See, for example, [CBC's implementation of IaC configuration of Embrionix emsfp EB22 modules]((https://github.com/cbcrc/ansible-embrionix)) using [Ansilble](https://www.ansible.com/) playbooks. This opens the possiblity of treating network switches, and individual network ports, as resources that can be managed as part of a resource management system that implements automated deployment and configuration. A resource lifecycle state model example that might implement this is shown below. It builds on [CBC's Ansible configuration for Embrionix SFP modules](https://github.com/cbcrc/ansible-embrionix). This example is a proof of feasibility indented to demonstrate how a network resources adapts to the resource lifecycle model.
 
 ![state model network switch impl](images/resource-state-model-network-switch-port-impl.png)
 *Resource deployment network switch port example.*
