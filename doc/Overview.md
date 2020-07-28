@@ -66,60 +66,58 @@ Specifically:
 
 The role of this document is to identify where these technologies are used to implement automated server deployment and configuration in the context of the resource lifecycle managment model. They are not discussed indivudally in depth.
 
+Note that IPMI is a deprecated standard and that new system management standards such as [Redfish](https://redfish.dmtf.org/) fullfil an equivalent purpose.
+
+
+
 ### Automating configuration network resources
 
-Networking equipment can be treated as a resource in the resource model, both at the level of a switch and hierarchically at the level of individual network ports. As such, it's possible to dynamically deploy and configure network resources if configuration interfaces and API's exist. For example, Arista network swtiches provide an embedded Linux operating and shell interface that can be used automate switch configuration. The presence of an embedded Linux operating system provides the opportunity for rich implementation of IaC methadologies directly on the network switch. At the individual port level, Embrionix provides a REST api to configure individual SFP modules.
+Networking equipment can be treated as a resource in the resource model, both at the level of a switch and hierarchically at the level of individual network ports. As such, it's possible to dynamically deploy and configure network resources if configuration interfaces and API's exist. For example, Arista network swtiches provide [EOS](https://www.arista.com/en/products/eos), an embedded Linux operating system , that can be used automate switch configuration. The presence of an embedded Linux operating system provides the opportunity for rich implementation of IaC methadologies directly on the network switch. At the individual port level, Embrionix provides a [REST api](https://www.embrionix.com/resource/emSFP-Restful-API-documentations) to configure individual SFP modules.
 
-These two implementations be viewed as emerging best practice:
+These two implementations can be viewed as emerging best practice for network resources:
 
 * Prefer REST API's for device configuration.
 * Prefer SSH access to a command line interface.
-* Consider provision of an accessible embedded operating system to enable implementation of rich IaC methadologies.
-
-CONTINUE HERE
+* Prefer an accessible embedded operating system to enable implementation of rich IaC methadologies.
 
 ## Resource Deployment State Model - Metal-as-a-Service Example
 
-Metal-as-a-Service (MaaS) refers to the automated povisioning of data-center compute resources. This is often described as "cloud style provisioning". 
+Metal-as-a-Service (MaaS) refers to the automated povisioning of "bare-metal" compute resources in a data ceter. The term "bare-metal" is a reference to the "bare" configuration state of servers when they are first installed in the data ceter. "Service" refers to the automated management of deployment and configuration of these server resources. This is often described as "cloud style provisioning" because it is representative of the methadologies used by large internet service providers who provide "cloud" computing resources.
 
 MaaS encompases automation of the following:
 
-* server identification
+* server hardware identification
 * firmware configuration
-* allocation management
+* allocation of server resources
 * operating system installation
 * application sofware installation and configuration
 * network configuration
 * decommisionning
+
+Metal-as-a-service (MaaS) implementation patterns leverage very mature industry standards to automate system mangement and monitoring, network boot, IP address management. MaaS system leverage these standards by adding automation tooling and administration systems that support managing many system reliably and efficiently at production scale.
+
+| Standards | |
+|---|---|
+|DHCP| Dynamic Host Configuration Protocol | IP address assignment, and provider of PXE boot configuration. |
+|TFTP| Trivial File Transfer Protocol | File transfer protocol used to load the network boot executable image. |
+|PXE| Preboot Execution Environment | Network boot capability built on DHCP and TFTP. Built into system firmware. |
+|IPMI| Intelligent Platform Management Interface | Out-of-band system management and monitoring independent of the host CPU and OS. Independent network interface, controller, and firmware. |
 
 ### Example Existing Industry Solutions:
 
 * [Ubuntu MaaS](https://maas.io/) is an example of an existing commercial implementation.
 * [GitHub metal cloud](https://github.blog/2015-12-01-githubs-metal-cloud/) is an example of proprietary implementation.
 
-### Implementations Leverage Mature Standards and Tooling
-
-Metal-as-a-service (MaaS) implementation patterns leverage very mature industry standards to automate system mangement and monitoring, network boot, IP address management. MaaS system leverage these standards by adding automation tooling and administration systems that support managing many system reliably and efficiently at production scale.
-
-| Standards | |
-|---|---|
-|DHCP| Automated IP address assignment. |
-|TFTP| File transfer protocol used for network booting. |
-|PXE| Network boot capability built on DHCP and TFTP. Built into system firmware. |
-|IPMI| Out-of-band system management and monitoring independent of the host CPU and OS. Independent network interface, controller, and firmware. |
-
-Note that IPMI is a deprecated standard and that new system management standards such as [Redfish](https://redfish.dmtf.org/) fullfil an equivalent purpose.
-
 ### Metal-as-a-Service representend using the resource model
 
-The following diagrams maps typical MaaS server configuration operations onto the resource model. The operations described in each transation can be entirly automated with the exception of administrator input to allocate, and retire, server resources.
+The following diagrams maps typical MaaS server configuration operations onto the resource model. The operations described in each transation can be entirely automated with the exception of administrator input to allocate, and retire, server resources.
 
 ![state model maas impl](images/resource-state-model-maas-impl.png)
 *Resource deployment metal-as-a-service example.*
 
 ### Separate Admin and Production Networks
 
-MaaS systems exploit server's system manage controls to configure, monitor, and control servers. These interfaces are typcally confiugred on a dedicated amdministrator network that is separate from production networks. In addition network interfaces are configured for admin network PXE boot, automated OS install, and IaC application configuration. Configuring server's production network interfaces is the responsiblity of IaC processing and falls under application configuration. A fully automated deploy system experiences no manual human configuration of production servers, server network interfaces, or production network switches. In a media environment this automated configuration may included video switch configuration.
+MaaS systems use a server's system manage controller to configure, monitor, and control the server via IPMI. These interfaces are typcally confiugred on a dedicated amdministrator network that is separate from production networks. In addition, network interfaces are configured for admin network PXE boot, automated OS install, and IaC configuration. Configuring a server's production network interfaces is the responsiblity of IaC processing. An individual server's network configuration happens in conjuction with configuration of dependant network services (switches, ports, etc). A fully automated deploy system requires no manual human configuration of production servers, or production network services. In a media environment this automated configuration may included video switch configuration.
 
 ![overview](images/deploy-network-overview.png)
 *Independent admin and production network.*
