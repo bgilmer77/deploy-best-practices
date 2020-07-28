@@ -149,7 +149,7 @@ The finite-state-machine model below represent these additional complexities.
 
 ![fsm](dot/gen/resource-fsm-complex.png)
 <br>
-*Example fuller representation of resource state model finite state machine.*
+*Example fuller representation of resource state model finite state machine. Blue transitions represent the simpler conceptual model.*
 
 | Current State | Transition | Next State |
 |---|---|---|
@@ -167,10 +167,12 @@ The finite-state-machine model below represent these additional complexities.
 |reserved| T_put_offline |offline|
 |offline| T_make_existing_available |available|
 |offline| T_retire |retired|
-|allocated| T_deploy |deployed|
+|allocated| T_stage |staged|
 |allocated| T_make_existing_available |available|
 |allocated| T_from_alloc_error |error|
-|deployed| T_release |released|
+|staged| T_commit | commit |
+|commited| T_accept |accepted|
+|accepted| T_release |released|
 |released| T_make_existing_available |available|
 |released| T_retire |retired|
 |released| T_from_release_error |error|
@@ -190,7 +192,9 @@ The finite-state-machine model below represent these additional complexities.
 |T_make_new_available | Perform processing to make a new resource available. |
 |T_make_existing_available | Perorm processing to return an existing resource to available. |
 |T_allocate | Allocate a resource for production deployment. |
-|T_deploy | Perform processing to configure a resource for production. |
+|T_stage | Perform first phase of initialization to prepare a resource. |
+|T_commit | Perform second phase of inititialize to configure of a staged resource for production role and commit to production. |
+|T_accept | Production acceptance of committed resource. |
 |T_put_offline | Perform processing to put an existing resource offline. |
 |T_release | Perform processing to release a deployed resource. |
 |T_reserve | Move a resource into reserved state. |
