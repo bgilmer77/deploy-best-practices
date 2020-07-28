@@ -122,7 +122,7 @@ MaaS systems use a server's system manage controller to configure, monitor, and 
 ![overview](images/deploy-network-overview.png)
 *Independent admin and production network.*
 
-## Resource Deployment State Model - Network Swith Port Example
+## Resource Deployment State Model - Network Switch Port Example
 
 Implementation of network configuration using IaC deployment methodologies is enabled by network switch and port interfaces that support automated configuration. See, for example, [CBC's implementation of IaC configuration of Embrionix emsfp EB22 modules]((https://github.com/cbcrc/ansible-embrionix)) using [Ansilble](https://www.ansible.com/) playbooks. This opens the possiblity of treating network switches, and individual network ports, as resources that can be managed as part of a resource management system that implements automated deployment and configuration. A resource lifecycle state model example that might implement this is shown below. It builds on [CBC's Ansible configuration for Embrionix SFP modules](https://github.com/cbcrc/ansible-embrionix). This example is a proof of feasibility indented to demonstrate how a network resources adapts to the resource lifecycle model.
 
