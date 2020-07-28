@@ -53,63 +53,30 @@ The following diagram identifies typical tasks that are completed during transit
 
 There is no requirement that transitions are automated in order to implement a resource manager. All transitions could be work orders completed manually by technicians. If transitions are automated, howerver, then resource lifecycle management can be automated. The limits of automation is the physical installation of new equipment, physical removal of retired equipment, and the highest level management input necessary to direct an admin system that acts as the human interface to the resource management system.
 
-### Automating configuration of compute resources
+### Automating configuration of server resources
 
-Automated configuration of server is possible by combining mature network standards for system management, network boot services, metal-as-a-service (MaaS) methodologies for intial bring up, and infrastructure-as-code (IaC) methadologies for final configuration. 
+Automated deployment and configuration of servers is possible by combining mature network system management services, network boot services, metal-as-a-service (MaaS) methodologies for intial system bring up, and infrastructure-as-code (IaC) methadologies for final configuration.
 
 Specifically:
 
-* IPMI for network access to system management controllers
-* PXE for network boot, which employs standard DHCP and TFTP network services
-* Automated operating system installation, as supported by individual OS vendors.
-* IaC methods supported by leading implementations such as Ansible and Puppet.
+* Use IPMI for network access to system management controllers
+* Use PXE for network boot, which employs standard DHCP and TFTP network services
+* Prefer automated operating system installation, as supported by individual OS vendors.
+* Prefer IaC methods supported by leading implementations such as [Puppet](https://puppet.com/) and [Ansible](https://www.ansible.com/).
 
-The role of this document is to identify where these technologies are used to implement automated server deployment and configuration in the context of the resource lifecycle managment model.
+The role of this document is to identify where these technologies are used to implement automated server deployment and configuration in the context of the resource lifecycle managment model. They are not discussed indivudally in depth.
 
-### Automating configuration of devices
+### Automating configuration network resources
 
-CONTINUE
+Networking equipment can be treated as a resource in the resource model, both at the level of a switch and hierarchically at the level of individual network ports. As such, it's possible to dynamically deploy and configure network resources if configuration interfaces and API's exist. For example, Arista network swtiches provide an embedded Linux operating and shell interface that can be used automate switch configuration. The presence of an embedded Linux operating system provides the opportunity for rich implementation of IaC methadologies directly on the network switch. At the individual port level, Embrionix provides a REST api to configure individual SFP modules.
 
+These two implementations be viewed as emerging best practice:
 
+* Prefer REST API's for device configuration.
+* Prefer SSH access to a command line interface.
+* Consider provision of an accessible embedded operating system to enable implementation of rich IaC methadologies.
 
-* Prefer REST API's as resource interface.
-* Prefer SSH for command line access to servers.
-
-Automated resource configuration is possible by implementation of admininistration sytsems that manage resource state and that automate the execution of processing tasks that represent the transitions between states. This requires that individual resources support automated methods of configuration. 
-
-  Automated server configuration is possible by employing Infrastructure as Code (IaC) methodologies. Mature implementations include [Puppet](https://puppet.com/) and [Ansible](https://www.ansible.com/). Employing IaC methods to configure simpler devices, such as network or video switches, requires that those devices support some form of configuration API. IaC methods can adapt to most types of API's howerver the prefered API is a REST API. The next best is a method of command line configuration via SSH. The least prefered, and strongly discouraged, method of configuration is any manual method, and any method that requires physical access to the device.
-
-## Security
-
-### Adhere to AMWA BCP-003
-
- * OAuth2 secury user authorization
- * TLS 1.2 for secure socket communication
- * X.509 certificate installation support
- * HTTPS exclusively for REST API's
- * REST API's use Authorization headers and Json Web Tokens
-
-These recomendations conform to [AMWA BCP-003](https://amwa-tv.github.io/nmos-api-security/) "Security recommendations for NMOS APIs". BCP-003. AMWA BCP-003 describes best practies for implementing secure web intefaces using HTTPS and OAuth2 user authentication.
-
-### Additional recommendations beyond AMWA BCP-003
-
- * SSH access secured by OAuth2 user authorization
- * SSH access secured by SSH-authorized keys
- * X.509 certificate support for SSH-key authorization
- 
-IaC tooling normal requires SSH access to the systems under configuration. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH authorization. Note that some, but not all, SSH implementations support X.509 certificates. This provides system administors the opportunity for uniform key management and sharing of keys used for HTTPS configuration.
-    
-__*TODO - Traditional SSH authorized_key sharing has security problems. Study SSH certificates including X.509 support.*__
-
-__*TODO - Consider update of BCP-0003 to include service account recommendations.*__
-
-### Service Accounts
-
- * Use of service accounts for server-to-server interaction
-
-Automated server to server interactions in trusted environments that are not perforrmed on behalf of an end user should use service accounts. A service account is an account that belongs to an application instead of an individual end user. 
-
-Service account authorization is supported using OAuth2 "two legged" authentication. See: [OAuth 2.0 Client Credentials Grant](https://oauth.net/2/grant-types/client-credentials/)
+CONTINUE HERE
 
 ## Resource Deployment State Model - Metal-as-a-Service Example
 
@@ -163,6 +130,38 @@ Incorrporation of network configuration in IaC deployment methodologies is becom
 
 ![state model network switch impl](images/resource-state-model-network-switch-port-impl.png)
 *Resource deployment network switch port example.*
+
+## Security
+
+### Adhere to AMWA BCP-003
+
+ * OAuth2 secury user authorization
+ * TLS 1.2 for secure socket communication
+ * X.509 certificate installation support
+ * HTTPS exclusively for REST API's
+ * REST API's use Authorization headers and Json Web Tokens
+
+These recomendations conform to [AMWA BCP-003](https://amwa-tv.github.io/nmos-api-security/) "Security recommendations for NMOS APIs". BCP-003. AMWA BCP-003 describes best practies for implementing secure web intefaces using HTTPS and OAuth2 user authentication.
+
+### Additional recommendations beyond AMWA BCP-003
+
+ * SSH access secured by OAuth2 user authorization
+ * SSH access secured by SSH-authorized keys
+ * X.509 certificate support for SSH-key authorization
+ 
+IaC tooling normal requires SSH access to the systems under configuration. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH authorization. Note that some, but not all, SSH implementations support X.509 certificates. This provides system administors the opportunity for uniform key management and sharing of keys used for HTTPS configuration.
+    
+__*TODO - Traditional SSH authorized_key sharing has security problems. Study SSH certificates including X.509 support.*__
+
+__*TODO - Consider update of BCP-0003 to include service account recommendations.*__
+
+### Service Accounts
+
+ * Use of service accounts for server-to-server interaction
+
+Automated server to server interactions in trusted environments that are not perforrmed on behalf of an end user should use service accounts. A service account is an account that belongs to an application instead of an individual end user. 
+
+Service account authorization is supported using OAuth2 "two legged" authentication. See: [OAuth 2.0 Client Credentials Grant](https://oauth.net/2/grant-types/client-credentials/)
 
 ## Appendix - Resource State Model: Example fuller representation
 
