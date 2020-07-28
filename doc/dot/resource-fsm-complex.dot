@@ -1,14 +1,21 @@
+#
+# This a an imagined complex version of the statement. It adds a
+#  "reserved", "offline", and "error" states along with new
+#  transitions to tie these states into the model.
+#
+# The simple (conceptual) model edges (transitions) are blue.
+#
 digraph resource_fsm_complex {
   concentrate=true
   edge [arrowsize=1]
 
-  start -> registered
+  start -> registered [color=blue, penwidth=2]
 
-  registered -> available
+  registered -> available [color=blue, penwidth=2]
   registered -> retired
   registered -> error
 
-  available -> allocated
+  available -> allocated [color=blue, penwidth=2]
   available -> retired
   available -> offline
   available -> reserved
@@ -21,14 +28,22 @@ digraph resource_fsm_complex {
   offline -> available
   offline -> retired
 
-  allocated -> deployed
+  allocated -> staged [color=blue, penwidth=2]
   allocated -> available
   allocated -> error
 
-  deployed -> released
+  staged -> committed [color=blue, penwidth=2]
+  staged -> error
 
-  released -> available
-  released -> retired
+  committed -> accepted [color=blue, penwidth=2]
+  committed -> error
+
+  accepted -> released [color=blue, penwidth=2]
+  accepted -> error
+
+  released -> available [color=blue, penwidth=2]
+
+  released -> retired:nw [color=blue, penwidth=2]
   released -> error
 
   error -> registered
@@ -37,5 +52,5 @@ digraph resource_fsm_complex {
   error -> offline
   error -> retired
 
-  retired -> end
+  retired -> end [color=blue, penwidth=2]
 }
