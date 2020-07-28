@@ -1,48 +1,77 @@
-# Best Practices, Deployment and Provisioning: Overview
+# Deployment, Provisioning and Resource Management: Overview
 
 ## Introduction
 
   TO BE COMPLETED (last writing step)
 
   * Put a definition on the term "deployment"
-  * Encompass: identification, allocation, configuration for production, and eventual retirement of resource.
+  * Encompass: identification, allocation, configuration committment for production, and eventual retirement of resource.
   * Summarise use cases: servers, network switches, video switches, video production equipment, etc.
+  * Identify significance and influence of MaaS.
   * Identify significance of IaC integration.
     
-## Resource Deployment State Model
+## Resource Management Lifecycle
 
-Resource deployment is represented using a simple life-cycle state model. Transition between states represent the progression of deployment tasks: identification, configuration, allocation, production deployment, and eventual retirment of the resource.
+Resource management is represented using a simple life-cycle state model. A "resource" generically represents equipment that is managed by a process of identification, allocation, configuration, and committment of the resource. Managing the deployment and configuration of a resource is the process of reliably moving the resource through this set of states.
 
 ![state model](images/resource-state-model.png)
-<br>*Resource deployment conceptual state model.*
+<br>*Resource management lifecycle conceptual state model.*
 
 
 | State | Description |
 |---|---|
 |registered | Resource existance and identity is recorded. |
 |available | Resource is available for allocation to production. |
-|allocated| Resource is allocated to production and scheduled for staging. |
-|staged| Resource is initialized and prepared for final configuration.|
-|configured| Resource is configured and ready for production acceptance. |
-|accepted| Resources is accepted and in use for production. |
+|allocated| Resource is allocated to production. |
+|staged| Resource staging phase of initialization is complete. |
+|committed| Resource configuration phase of initialize is complete and it is committed to production. |
+|accepted| Resources was accepted and is active in production. |
 |released| Resource is no longer active in production. |
-|retired | Resource is ready to be removed from facility. |
+|retired | Resource is ready to be removed from the facility. |
 
 <!--
 |staged| Resource is initialized and ready for configuration.| Firware configured, OS installed, initial network configuration. |
 |configured| Resource is configured and in production, e.g. media device role assigned, name assigned, active media interfaces, ready to be tested. |
 -->
 
-## Generic Resource Deployment
+## Resource Management as a State Machine
 
-Deployment processing can be thought of as simply finite state machine where deployment tasks are completed by the transitions from one state to the next. Succesful execution of a transition moves the resource to the next life cycle state. The following diagram identifies typical tasks that are completed during transitions in order to move a resource through its deployment life cycle.
+Deployment and configuration can be thought of as  finite state machine where deployment tasks are completed by the transitions that move a resource from one state to the next. A "state" represents the condition of a resource at a point in time. A "transition" represents the actions that are performed to move the resource from one state to another state. A resource only moves from one state to another by succsesful execution of transition.
+
+In this sense, resource "state" can be thought of as an attribute of a resource that stored in a resource administration system, i.e. a database. When an administrator uses the admin system to check the state of a resource they are viewing the single source of true of that resource's state. If the resource changes state it because the admin system executed a transition that performed the work necessary to move it to the new state (and that that transition completed without error). Maintaining the admin system as the source of truth means that the admin system has sole responsibility for persisting the resource state and it has sole responsibility for initiating transitions that change state. The admin system's view of "state" is very concrete: it's a field in a database that represents a state in a state machine. The admin system's view of "transition", however, is very abstract. It has no idea how a transition is implemented, just that it is implemented and that is can be initiated upon request. Transition "implementations" are the point where the conceptual state model is adapted to real world resources.
+
+The following diagram identifies typical tasks that are completed during transitions in order to move a resource through its deployment and configuration lifecycle. It doesn't matter if a transition is automated, or manual, or a combinination. What matters is:
+
+* The admin system initiates the transition.
+* The transition leaves the resource in a condition that is conceptually consistent with the lifecycle model.
+* The admin system receives unequivocal notification of transition success or failure.
 
 ![state model](images/resource-state-model-generic-impl.png)
-<br>*Gerneric resource deployment with described state transitions.*
+<br>*Generic resource management lifecycle with described state transitions.*
 
-## Automated Resource Configuration
+## Automated Resource Management
 
-* Prefer Infrastructure as Code (IaC) methodologies for system configuration.
+There is no requirement that transitions are automated in order to implement a resource manager. All transitions could be work orders completed manually by technicians. If transitions are automated, howerver, then resource lifecycle management can be automated. The limits of automation is the physical installation of new equipment, physical removal of retired equipment, and the highest level management input necessary to direct an admin system that acts as the human interface to the resource management system.
+
+### Automating configuration of compute resources
+
+Automated configuration of server is possible by combining mature network standards for system management, network boot services, metal-as-a-service (MaaS) methodologies for intial bring up, and infrastructure-as-code (IaC) methadologies for final configuration. 
+
+Specifically:
+
+* IPMI for network access to system management controllers
+* PXE for network boot, which employs standard DHCP and TFTP network services
+* Automated operating system installation, as supported by individual OS vendors.
+* IaC methods supported by leading implementations such as Ansible and Puppet.
+
+The role of this document is to identify where these technologies are used to implement automated server deployment and configuration in the context of the resource lifecycle managment model.
+
+### Automating configuration of devices
+
+CONTINUE
+
+
+
 * Prefer REST API's as resource interface.
 * Prefer SSH for command line access to servers.
 
