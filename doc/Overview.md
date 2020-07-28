@@ -131,12 +131,16 @@ Implementation of network configuration using IaC deployment methodologies is en
 
 ## Security
 
-### Adhere to AMWA BCP-003
+Automated deployment and configuration, metal-as-a-service implmentations, and infrastructure-as-code methadologies, are significant departures from the manual processes traditionally employed in data centers and particularly in media organizations that often lag in adoption of IT industry best practices. Applying best practices to security is particularly critical when implementing deployment and configuration automation. Secure authorization and communication does more than limit intentional abuse, it importantly prevents accidental configuration errors that have potential to create substantial service disruption.
 
- * OAuth2 secury user authorization
- * TLS 1.2 for secure socket communication
+This document suggests best practices to consider. It is not a complete set of recommendations. These are offered in recognition of the fact that good security practicies are a critical foundational element of an automation system.
+
+### Build on AMWA BCP-003
+
+ * Oauth2 secure user authorization
+ * TLS 1.2 for secure socket communication for WEB interfaces
  * X.509 certificate installation support
- * HTTPS exclusively for REST API's
+ * HTTPS exclusively for WEB interfaces, including REST API's
  * REST API's use Authorization headers and Json Web Tokens
 
 These recomendations conform to [AMWA BCP-003](https://amwa-tv.github.io/nmos-api-security/) "Security recommendations for NMOS APIs". BCP-003. AMWA BCP-003 describes best practies for implementing secure web intefaces using HTTPS and OAuth2 user authentication.
@@ -147,20 +151,20 @@ These recomendations conform to [AMWA BCP-003](https://amwa-tv.github.io/nmos-ap
  * SSH access secured by SSH-authorized keys
  * X.509 certificate support for SSH-key authorization
  
-IaC tooling normal requires SSH access to the systems under configuration. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH authorization. Note that some, but not all, SSH implementations support X.509 certificates. This provides system administors the opportunity for uniform key management and sharing of keys used for HTTPS configuration.
-    
-__*TODO - Traditional SSH authorized_key sharing has security problems. Study SSH certificates including X.509 support.*__
+IaC tooling normal requires SSH access to the systems under configuration. Embedded operating systems, e.g. in network switches, also use SSH. Securig SSH configuration is critical to the security of the entire system. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH key authorization. X.509 certificate based key authorization is perferred if supported by the SSH implementation. Key management is critical. Keys must be carefully managed and not left to developers to implement on an ad-hoc basis.
 
-__*TODO - Consider update of BCP-0003 to include service account recommendations.*__
+It is recommended that AMWA extend its security recommendations to include SSH configuration practices and that that be reconciled with AMWA BCP-003 and any other security recommendations published by AMWA.
 
 ### Service Accounts
 
  * Use of service accounts for server-to-server interaction
 
-Automated server to server interactions in trusted environments that are not perforrmed on behalf of an end user should use service accounts. A service account is an account that belongs to an application instead of an individual end user. 
+Automated server to server interactions in trusted environments that are not perforrmed on behalf of an end user should use service accounts. A service account is an account that belongs to an application instead of an individual end user. This is particuarly important if zero-human-configuration production systems is an implementation goal. In a zero-human-configuration environment no end-user account is authorized to access production systems or production networking equipment. Service acounts are the best solution.
 
 Service account authorization is supported using OAuth2 "two legged" authentication. See: [OAuth 2.0 Client Credentials Grant](https://oauth.net/2/grant-types/client-credentials/)
 
+It is recommended that AMWA extend its security recommendations to include service account recommendations for secure server-to-server communication. This may be a gap in AMWA BCP-003, or it may be part of new best practice that has to be developed.
+    
 ## Appendix - Resource State Model: Example fuller representation
 
 A real-world implementation of a resource life-cycle model is necessarily more complex than the conceptual model presented here. Additional complexities may include:
@@ -175,7 +179,7 @@ The finite-state-machine model below represent these additional complexities.
 
 ![fsm](dot/gen/resource-fsm-complex.png)
 <br>
-*Example fuller representation of resource state model finite state machine. Blue transitions represent the simpler conceptual model.*
+*Example fuller representation of resource state model finite state machine. Blue transitions represent the simpler conceptual model transitions.*
 
 | Current State | Transition | Next State |
 |---|---|---|
