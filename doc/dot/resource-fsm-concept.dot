@@ -1,0 +1,27 @@
+#
+# This a simple model that matches the conception model exactly. It's
+# a good starting point for experiments.
+#
+digraph resource_fsm_complex {
+
+  edge [arrowsize=1]
+
+  start -> registered
+
+  registered -> available
+
+  available -> allocated  
+
+  allocated -> staged
+
+  staged -> committed
+
+  committed -> accepted
+
+  accepted -> released
+
+  released -> available
+  released -> retired
+
+  retired -> end
+}
