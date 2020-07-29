@@ -113,21 +113,43 @@ Metal-as-a-service (MaaS) implementation patterns leverage very mature industry 
 The following diagrams maps typical MaaS server configuration operations onto the resource model. The operations described in each transation can be entirely automated with the exception of administrator input to allocate, and retire, server resources.
 
 ![state model maas impl](images/resource-state-model-maas-impl.png)
-*Resource deployment metal-as-a-service example.*
+<br>*Resource deployment metal-as-a-service example.*
 
 ### Separate Admin and Production Networks
 
 MaaS systems use a server's system manage controller to configure, monitor, and control the server via IPMI. These interfaces are typcally confiugred on a dedicated amdministrator network that is separate from production networks. In addition, network interfaces are configured for admin network PXE boot, automated OS install, and IaC configuration. Configuring a server's production network interfaces is the responsiblity of IaC processing. An individual server's network configuration happens in conjuction with configuration of dependant network services (switches, ports, etc). A fully automated deploy system requires no manual human configuration of production servers, or production network services.
 
 ![overview](images/deploy-network-overview.png)
-*Independent admin and production network.*
+<br>*Independent admin and production network.*
 
 ## Resource Deployment State Model - Network Switch Port Example
 
 Implementation of network configuration using IaC deployment methodologies is enabled by network switch and port interfaces that support automated configuration. See, for example, [CBC's implementation of IaC configuration of Embrionix emsfp EB22 modules]((https://github.com/cbcrc/ansible-embrionix)) using [Ansilble](https://www.ansible.com/) playbooks. This opens the possiblity of treating network switches, and individual network ports, as resources that can be managed as part of a resource management system that implements automated deployment and configuration. A resource lifecycle state model example that might implement this is shown below. It builds on [CBC's Ansible configuration for Embrionix SFP modules](https://github.com/cbcrc/ansible-embrionix). This example is a proof of feasibility indented to demonstrate how a network resources adapts to the resource lifecycle model.
 
 ![state model network switch impl](images/resource-state-model-network-switch-port-impl.png)
-*Resource deployment network switch port example.*
+<br>*Resource deployment network switch port example.*
+
+## NMOS Integration Considerations
+
+### Two Registry Problem
+
+Resource discovery and registration is a special consideration when integrating NMOS resources.
+
+The MaaS systems discussed in this document implement administration systems that have a resource registry at their core. The MaaS resource registry is the single-source of truth for all resources that are administered by the MaaS system. The existance of a single-source-of-true is a best practice. The MaaS admin system uses the resource registry to manage allocation, pooling, staging, committment, and acceptance of individual resources. The resource registry is a fundamental, and critical, system component that would typically be implemented with great care using a high availablity, redundant, database system.
+
+NMOS devices have their own unique registration requirements. They expect to find an [AMWA IS-04](http://amwa-tv.github.io/nmos-discovery-registration/) compliant registration service on their network and use that service to register their identity and capabilities.
+
+This creates a "two registry problem": if a MaaS resource management system implements one resource registy, and an NMOS system implements another dedicated NMOS-only registy, then systems administrators lose their single source of truth. Their view of the facility is now NMOS and everything else. This adds system development and administration complexity - possibly substantial. It risks compromising the benefits for which MaaS and IaC methodologies were introduced to begin with.
+
+![overview](images/nmos-two-registry-problem.png)
+<br>*NMOS two registry problem.*
+
+### Two Registry Solution
+
+The simplest solution to the "two registry problem" is to fully embrace NMOS registration into the the larger resource management system. This means implementing an NMOS registration service that operates as an integral component of the larger resource registry service. There is no attempt to import, synchronize, or adapt a separate external NMOS registry into the larger single-source-of-truth system wide resource registry. The NMOS registry simply becomes an interface by which NMOS devices register directly with the larger resource management system. NMOS devices become peers of all other resources and experience the same resource life cycle management. System developers and administrators maintain a single-source-of-truth view of the system wide resources under managmenent.
+
+![overview](images/nmos-two-registry-solution.png)
+<br>*NMOS two registry solution.*
 
 ## Security
 
