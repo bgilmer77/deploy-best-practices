@@ -167,7 +167,7 @@ These recommendations conform to [AMWA BCP-003] "Security recommendations for NM
  * [SSH] access secured by OAuth2 user authorization
  * [SSH] access secured by SSH-authorized keys
  * X.509 certificate support for SSH-key authorization
- 
+
 [IaC] tooling normally requires [SSH] access to the systems under configuration. Embedded operating systems, e.g. [Arista EOS], also use [SSH]. Securing SSH configuration is critical to the security of the entire system. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH key authorization. X.509 certificate based key authorization is preferred if supported by the SSH implementation. Key management is critical. Keys must be carefully managed and not left to developers, or inexperienced administrators, to implement on an ad-hoc basis.
 
 It is recommended that [AMWA] extend its security recommendations to include [SSH] configuration best practices and that that be reconciled with [AMWA BCP-003] and any other security recommendations published by [AMWA].
@@ -181,7 +181,11 @@ Automated server to server interactions in trusted environments that are not per
 Service account authorization is supported using [OAuth2] "two legged" authentication. See:[OAuth 2.0 Client Credentials Grant][OAuth2 Two Legged].
 
 It is recommended that [AMWA] extend its security recommendations to include service account recommendations for secure server-to-server communication. This may be a gap in [AMWA BCP-003], or it may be part of new best practice that has to be developed.
-    
+
+#### [CICD] use of service accounts
+
+Continuous integration and continuous delivery [CICD] methodologies are a natural extension of dynamic configuration and resource management practices. CICD encourages end-to-end, development-to-deployment, automation. CICD best practices require services-accounts to provide secure and reliable access to production systems. CICD methodologies mix user account authorization for development with service account authorization for deployment. Clear distinction between the two account types contributes to reliable and safe production deployment.
+
 ## Appendix - Resource State Model: Example fuller representation
 
 A real-world implementation of a resource life-cycle model is necessarily more complex than the conceptual model presented here. Additional complexities may include:
@@ -283,7 +287,7 @@ The finite-state-machine model below represents these additional complexities.
 |[MaaS]|
 |[Ubuntu MaaS]|
 |[GitHub metal cloud]|
-
+|[CICD]|
 
 <!-- REFERENCES -->
 [DHCP]: https://tools.ietf.org/html/rfc2131
@@ -306,6 +310,7 @@ The finite-state-machine model below represents these additional complexities.
 [AMWA]: https://www.amwa.tv/
 [OAuth2]: https://oauth.net/2/
 [OAuth2 Two Legged]: https://oauth.net/2/grant-types/client-credentials/
+[CICD]: https://stackify.com/what-is-cicd-whats-important-and-how-to-get-it-right/
 
 <!-- TODO: try to find a generic MaaS reference -->
 [MaaS]: https://maas.io/docs
