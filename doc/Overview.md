@@ -23,8 +23,8 @@ Resource management is represented using a simple life-cycle state model. A "res
 |registered | Resource existance and identity is recorded. |
 |available | Resource is available for allocation to production. |
 |allocated| Resource is allocated to production. |
-|staged| Resource staging phase of initialization is complete. |
-|committed| Resource configuration phase of initialize is complete and it is committed to production. |
+|staged| Resource staging phase of configuration is complete. |
+|committed| Resource final configuration is complete and it is committed to production. |
 |accepted| Resources was accepted and is active in production. |
 |released| Resource is no longer active in production. |
 |retired | Resource is ready to be removed from the facility. |
@@ -240,8 +240,8 @@ The finite-state-machine model below represents these additional complexities.
 |T_make_new_available | Perform processing to make a new resource available. |
 |T_make_existing_available | Perorm processing to return an existing resource to available. |
 |T_allocate | Allocate a resource for production deployment. |
-|T_stage | Perform first phase of initialization to prepare a resource. |
-|T_commit | Perform second phase of inititialize to configure of a staged resource for production role and commit to production. |
+|T_stage | Perform first phase of configuration to prepare a resource. |
+|T_commit | Perform final phase of configuration for role and commit resource to production. |
 |T_accept | Production acceptance of committed resource. |
 |T_put_offline | Perform processing to put an existing resource offline. |
 |T_release | Perform processing to release a deployed resource. |
