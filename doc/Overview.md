@@ -137,14 +137,14 @@ The [MaaS] methadologies discussed in this document implement administration sys
 This creates a "two registry problem": if a [MaaS] resource management system implements one resource registy, and an [NMOS] system implements another dedicated [NMOS-only][NMOS] registy, then systems administrators lose their single source of truth. Their view of the facility is now split between the [NMOS universe][NMOS] and everything else. This adds system development and administration complexity - possibly substantial. It risks compromising the benefits for which [MaaS] and [IaC] methodologies were introduced to begin with.
 
 ![overview](images/nmos-two-registry-problem.png)
-<br>*NMOS two registry problem. Multiple sources of truth confounds reliable system managment.*
+<br>*NMOS two registry problem. The NMOS registry is outside the resource registry. Multiple sources of truth confounds reliable system managment.*
 
 ### Two Registry Solution
 
 The simplest solution to the "two registry problem" is to fully embrace [NMOS registration][AMWA IS-04] into the the core resource management system. This means implementing an NMOS registration service that operates as an integral component of the larger resource registry service. There is, then, no attempt to import, synchronize, or adapt a separate external NMOS registry into the larger single-source-of-truth system wide resource registry. The NMOS registry simply becomes an interface by which NMOS devices register directly with the same core resource management system where all other resources are regsitered. NMOS devices become peers of all other resources and experience the same fundamental resource life cycle management. System developers and administrators maintain a single-source-of-truth view of the system wide resources under managmenent.
 
 ![overview](images/nmos-two-registry-solution.png)
-<br>*NMOS two registry solution. Single source of truth enables reliable system management.*
+<br>*NMOS two registry solution. Implement the NMOS registry as an integral part of the system wide resource registry. Single source of truth enables reliable system management.*
 
 ## Security
 
