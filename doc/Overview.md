@@ -192,12 +192,12 @@ It is recommended that AMWA extend its security recommendations to include servi
 A real-world implementation of a resource life-cycle model is necessarily more complex than the conceptual model presented here. Additional complexities may include:
 
 * Additional states are required to implement requirements suchs as reservation of resources, or putting resources offline for maintenance.
-* The requirement for a fuller set of transitions between states that is represented by a simple conception model.
-  * e.g. to return to "available" from "allocated" without ever having been deployed.
+* The requirement for a fuller set of transitions between states than is represented by a simple conception model.
+  * e.g. to return to "available" from "allocated" without ever having been staged
   * e.g. retiring a registered resource before ever having made it available
 * The real-world requirement for robust exception handling that introduces error states.
 
-The finite-state-machine model below represent these additional complexities.
+The finite-state-machine model below represents these additional complexities.
 
 ![fsm](dot/gen/resource-fsm-complex.png)
 <br>
