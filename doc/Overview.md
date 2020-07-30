@@ -178,7 +178,7 @@ It is recommended that [AMWA] extend its security recommendations to include [SS
 
 Automated server to server interactions in trusted environments that are not perforrmed on behalf of an end user should use service accounts. A service account is an account that belongs to an application instead of an individual end user. This is particuarly important if zero-human-configuration production systems is an implementation goal. In a zero-human-configuration environment no end-user account is authorized to access production systems or production networking equipment. Service acounts are the best solution.
 
-Service account authorization is supported using [OAuth2] "two legged" authentication. See:[OAuth 2.0 Client Credentials Grant][OAuth2 O2L].
+Service account authorization is supported using [OAuth2] "two legged" authentication. See:[OAuth 2.0 Client Credentials Grant][OAuth2 Two Legged].
 
 It is recommended that [AMWA] extend its security recommendations to include service account recommendations for secure server-to-server communication. This may be a gap in [AMWA BCP-003], or it may be part of new best practice that has to be developed.
     
@@ -255,6 +255,36 @@ The finite-state-machine model below represents these additional complexities.
 
 *Example transition descriptions.*
 
+
+## Appendix - Summary of all referenced URL's
+
+| |
+|---|
+|[DHCP]|
+|[IPAM]|
+|[IPMI]|
+|[TFTP]|
+|[PXE]|
+|[Redfish]|
+|[IaC]|
+|[Puppet]|
+|[Ansible]|
+|[Arista EOS]|
+|[Embrionix REST]|
+|[CBC Embrionix GitHub]|
+|[NMOS]|
+|[PostgreSQL]|
+|[AMWA IS-04]|
+|[AMWA BCP-003]|
+|[SSH]|
+|[AMWA]|
+|[OAuth2]|
+|[OAuth2 Two Legged]|
+|[MaaS]|
+|[Ubuntu MaaS]|
+|[GitHub metal cloud]|
+
+
 <!-- REFERENCES -->
 [DHCP]: https://tools.ietf.org/html/rfc2131
 [IPAM]: https://docs.microsoft.com/en-us/windows-server/networking/technologies/ipam/ipam-top
@@ -263,7 +293,7 @@ The finite-state-machine model below represents these additional complexities.
 [PXE]: https://en.wikipedia.org/wiki/Preboot_Execution_Environment
 [Redfish]: https://redfish.dmtf.org/
 [IaC]: https://docs.microsoft.com/en-us/azure/devops/learn/what-is-infrastructure-as-code
-[Puppet]: https://puppet.com/)
+[Puppet]: https://puppet.com/
 [Ansible]: https://www.ansible.com/
 [Arista EOS]: https://www.arista.com/en/products/eos
 [Embrionix REST]: https://www.embrionix.com/resource/emSFP-Restful-API-documentations
@@ -274,10 +304,11 @@ The finite-state-machine model below represents these additional complexities.
 [AMWA BCP-003]: https://amwa-tv.github.io/nmos-api-security/
 [SSH]: https://www.ssh.com/ssh/
 [AMWA]: https://www.amwa.tv/
-[OAuth2](https://oauth.net/2/)
-[OAuth2 O2L]: (https://oauth.net/2/grant-types/client-credentials/)
+[OAuth2]: https://oauth.net/2/
+[OAuth2 Two Legged]: https://oauth.net/2/grant-types/client-credentials/
 
 <!-- TODO: try to find a generic MaaS reference -->
 [MaaS]: https://maas.io/docs
+
 [Ubuntu MaaS]: https://maas.io
 [GitHub metal cloud]: https://github.blog/2015-12-01-githubs-metal-cloud
