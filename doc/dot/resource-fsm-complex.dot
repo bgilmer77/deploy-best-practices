@@ -29,6 +29,7 @@ digraph resource_fsm_complex {
   offline -> retired
 
   allocated -> staged [color=blue, penwidth=2]
+  allocated -> committed
   allocated -> available
   allocated -> error
 
