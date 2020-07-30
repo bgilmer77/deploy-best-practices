@@ -142,14 +142,14 @@ NMOS devices have their own unique registration requirements. They expect to fin
 This creates a "two registry problem": if a MaaS resource management system implements one resource registy, and an NMOS system implements another dedicated NMOS-only registy, then systems administrators lose their single source of truth. Their view of the facility is now NMOS and everything else. This adds system development and administration complexity - possibly substantial. It risks compromising the benefits for which MaaS and IaC methodologies were introduced to begin with.
 
 ![overview](images/nmos-two-registry-problem.png)
-<br>*NMOS two registry problem.*
+<br>*NMOS two registry problem. Multiple sources of truth confounds reliable system managment.*
 
 ### Two Registry Solution
 
 The simplest solution to the "two registry problem" is to fully embrace NMOS registration into the the larger resource management system. This means implementing an NMOS registration service that operates as an integral component of the larger resource registry service. There is no attempt to import, synchronize, or adapt a separate external NMOS registry into the larger single-source-of-truth system wide resource registry. The NMOS registry simply becomes an interface by which NMOS devices register directly with the larger resource management system. NMOS devices become peers of all other resources and experience the same resource life cycle management. System developers and administrators maintain a single-source-of-truth view of the system wide resources under managmenent.
 
 ![overview](images/nmos-two-registry-solution.png)
-<br>*NMOS two registry solution.*
+<br>*NMOS two registry solution. Single source of truth enables reliable system management.*
 
 ## Security
 
