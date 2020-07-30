@@ -124,9 +124,11 @@ Implementation of network configuration using [IaC] methodologies is enabled by 
 
 ## [NMOS] Integration Considerations
 
-### Two Registry Problem
+[NMOS] refers to Networked Media Open Specifications that are developed by [AMWA] for use in IP-based media facilities to define a control and management layer in addition to existing media transport layers.
 
 Resource discovery and registration is a special consideration when integrating [NMOS] resources.
+
+### Two Registry Problem
 
 The [MaaS] methodologies discussed in this document implement administration systems that have a resource registry at their core. A [MaaS] resource registry is the single-source of truth for all resources that are administered by the [MaaS] system. The existence of a single-source-of-truth is a best practice. Breaking that would be an anti-pattern. The [MaaS] admin system uses the resource registry to manage allocation, pooling, staging, commitment, and acceptance of individual resources. The resource registry is a fundamental, and critical, system component that would typically be implemented with great care using a high availability, redundant, database system. For example, [Ubuntu's MaaS][Ubuntu MaaS] systems builds its admin services using a redundant [PostgreSQL] cluster.
 
