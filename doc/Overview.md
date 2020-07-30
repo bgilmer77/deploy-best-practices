@@ -2,13 +2,11 @@
 
 ## Introduction
 
-  TO BE COMPLETED (last writing step)
+Metal as a Service ([Maas])  and Infrastructure as Code ([IaC]) methodologies have emerged as best practices for deploying, configuring, and managing IT data center resources. Combined, they bring reliability, efficiency, and scale to the process of deploying and configuring servers, networks, authentication and security infrastructure, and application software services. Applying these IT industry best practices to media facilities brings the same benifits but demands adaptation to the unique requirements of video facilities.
 
-  * Put a definition on the term "deployment"
-  * Encompass: identification, allocation, configuration committment for production, and eventual retirement of resource.
-  * Summarise use cases: servers, network switches, video switches, video production equipment, etc.
-  * Identify significance and influence of MaaS.
-  * Identify significance of IaC integration.
+MaaS and IaC methadolgoies are built on top of long standing and very well understood standards. MaaS automation is built on a foundation of remote system management and network boot standards (i.e. [IMPI] and [PXE]). IaC is build on a foundation of secure shell interfaces for system access and well known scripting languges for configuration automation (e.g. [SSH] and [Python]). Binding these elements together to create a coherent deployment and configuration system is the job of a supervisory layer of software that is generically referred to as the "admin system" or "admin services". The admin system provides the human management interface from which resources are automatically allocated, deployed and configured.
+
+The admin system is a resource management system. Resources are the individual servers, networking switches, network ports, video switches, video production components, etc. The admin system is the manager and orchestrator of resource deployment and configuration. It's the central component in a dynamic configuration and resource management system. Everything beneath it is a layer of adaptation that brings individual resources into the managed domain of the admin system. What is administered, fundamentally, is the life-cycle of individual resources: initialy discovery, unique identification, allocation, configuration, entry into production, release from production, and eventual decomissioning of the resource. Understanding this life-cycle in the context of MaaS and IaC methadologies provides clearer understanding of where, and how, the unique requirements of media facilities must be adapted and where best practices still have to be developed.
     
 ## Resource Management Lifecycle
 
@@ -312,3 +310,4 @@ The finite-state-machine model below represents these additional complexities.
 
 [Ubuntu MaaS]: https://maas.io
 [GitHub metal cloud]: https://github.blog/2015-12-01-githubs-metal-cloud
+[Python]: https://www.python.org/
