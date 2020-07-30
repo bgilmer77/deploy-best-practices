@@ -57,7 +57,7 @@ Automated deployment and configuration of servers is possible by combining matur
 Specifically:
 
 * Use [IPMI] for network access to system management controllers
-* Use [PXE] for network boot, which employs standard DHCP and TFTP network services
+* Use [PXE] for network boot, which employs standard [DHCP] and [TFTP] network services
 * Prefer automated operating system installation, as supported by individual OS vendors.
 * Prefer [IaC] methods supported by leading implementations such as [Puppet] and [Ansible].
 
@@ -95,7 +95,7 @@ Metal-as-a-service (MaaS) implementation patterns leverage very mature industry 
 |---|---|
 |[DHCP]| Dynamic Host Configuration Protocol | IP address assignment, and provider of PXE boot configuration. |
 |[TFTP]| Trivial File Transfer Protocol | File transfer protocol used to load the network boot executable image. |
-|[PXE]| Preboot Execution Environment | Network boot capability built on DHCP and TFTP. Built into system firmware. |
+|[PXE]| Preboot Execution Environment | Network boot capability built on [DHCP] and [TFTP]. Built into system firmware. |
 |[IPMI]| Intelligent Platform Management Interface | Out-of-band system management and monitoring independent of the host CPU and OS. Independent network interface, controller, and firmware. |
 
 ### Example Existing Industry Solutions:
@@ -148,29 +148,29 @@ The simplest solution to the "two registry problem" is to fully embrace [NMOS re
 
 ## Security
 
-Automated deployment and configuration, metal-as-a-service implmentations, and infrastructure-as-code methadologies, are significant departures from the manual processes traditionally employed in data centers and particularly in media organizations that often lag in adoption of IT industry best practices. Applying best practices to security is particularly critical when implementing deployment and configuration automation. Secure authorization and communication does more than limit intentional abuse, it importantly prevents accidental configuration errors that have potential to create substantial service disruption.
+Automated deployment and configuration, metal-as-a-service implementations, and infrastructure-as-code methadologies, are significant departures from the manual processes traditionally employed in data centers and particularly in media organizations that often lag in adoption of IT industry best practices. Applying best practices to security is particularly critical when implementing deployment and configuration automation. Secure authorization and communication does more than limit intentional abuse, it also, and importantly, helps prevent accidental configuration errors that have potential to create substantial service disruption.
 
 This document suggests best practices to consider. It is not a complete set of recommendations. These are offered in recognition of the fact that good security practicies are a critical foundational element of an automation system.
 
-### Build on AMWA BCP-003
+### Build on [AMWA BCP-003]
 
- * Oauth2 secure user authorization
+ * [Oauth2] secure user authorization
  * TLS 1.2 for secure socket communication for WEB interfaces
  * X.509 certificate installation support
  * HTTPS exclusively for WEB interfaces, including REST API's
  * REST API's use Authorization headers and Json Web Tokens
 
-These recomendations conform to [AMWA BCP-003](https://amwa-tv.github.io/nmos-api-security/) "Security recommendations for NMOS APIs". BCP-003. AMWA BCP-003 describes best practies for implementing secure web intefaces using HTTPS and OAuth2 user authentication.
+These recomendations conform to [AMWA BCP-003] "Security recommendations for NMOS APIs". BCP-003. [AMWA BCP-003] describes best practies for implementing secure web intefaces using HTTPS and OAuth2 user authentication.
 
-### Additional recommendations beyond AMWA BCP-003
+### Additional recommendations beyond [AMWA BCP-003]
 
- * SSH access secured by OAuth2 user authorization
- * SSH access secured by SSH-authorized keys
+ * [SSH] access secured by OAuth2 user authorization
+ * [SSH] access secured by SSH-authorized keys
  * X.509 certificate support for SSH-key authorization
  
-IaC tooling normal requires SSH access to the systems under configuration. Embedded operating systems, e.g. in network switches, also use SSH. Securig SSH configuration is critical to the security of the entire system. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH key authorization. X.509 certificate based key authorization is perferred if supported by the SSH implementation. Key management is critical. Keys must be carefully managed and not left to developers to implement on an ad-hoc basis.
+[IaC] tooling normally requires [SSH] access to the systems under configuration. Embedded operating systems, e.g. [Arista EOS], also use [SSH]. Securing SSH configuration is critical to the security of the entire system. SSH user authorization should use OAuth2. SSH authorized keys are preferred, and normally necessary, for automated SSH login. Systems that support SSH login should provide methods for installing public keys to enable SSH key authorization. X.509 certificate based key authorization is perferred if supported by the SSH implementation. Key management is critical. Keys must be carefully managed and not left to developers, or inexperienced administrators, to implement on an ad-hoc basis.
 
-It is recommended that AMWA extend its security recommendations to include SSH configuration practices and that that be reconciled with AMWA BCP-003 and any other security recommendations published by AMWA.
+It is recommended that [AMWA] extend its security recommendations to include [SSH] configuration best practices and that that be reconciled with [AMWA BCP-003] and any other security recommendations published by [AMWA].
 
 ### Service Accounts
 
@@ -178,9 +178,9 @@ It is recommended that AMWA extend its security recommendations to include SSH c
 
 Automated server to server interactions in trusted environments that are not perforrmed on behalf of an end user should use service accounts. A service account is an account that belongs to an application instead of an individual end user. This is particuarly important if zero-human-configuration production systems is an implementation goal. In a zero-human-configuration environment no end-user account is authorized to access production systems or production networking equipment. Service acounts are the best solution.
 
-Service account authorization is supported using OAuth2 "two legged" authentication. See: [OAuth 2.0 Client Credentials Grant](https://oauth.net/2/grant-types/client-credentials/)
+Service account authorization is supported using [OAuth2] "two legged" authentication. See:[OAuth 2.0 Client Credentials Grant][OAuth2 O2L].
 
-It is recommended that AMWA extend its security recommendations to include service account recommendations for secure server-to-server communication. This may be a gap in AMWA BCP-003, or it may be part of new best practice that has to be developed.
+It is recommended that [AMWA] extend its security recommendations to include service account recommendations for secure server-to-server communication. This may be a gap in [AMWA BCP-003], or it may be part of new best practice that has to be developed.
     
 ## Appendix - Resource State Model: Example fuller representation
 
@@ -196,7 +196,7 @@ The finite-state-machine model below represents these additional complexities.
 
 ![fsm](dot/gen/resource-fsm-complex.png)
 <br>
-*Example fuller representation of resource state model finite state machine. Blue transitions represent the simpler conceptual model transitions.*
+*Example fuller representation of a resource lifecycle finite state machine. Blue transitions represent the simpler conceptual model transitions.*
 
 | Current State | Transition | Next State |
 |---|---|---|
@@ -215,10 +215,10 @@ The finite-state-machine model below represents these additional complexities.
 |offline| T_make_existing_available |available|
 |offline| T_retire |retired|
 |allocated| T_stage |staged|
-|allocated| T_commit |commit|
+|allocated| T_commit |committed|
 |allocated| T_make_existing_available |available|
 |allocated| T_from_alloc_error |error|
-|staged| T_commit | commit |
+|staged| T_commit | committed |
 |commited| T_accept |accepted|
 |accepted| T_release |released|
 |released| T_make_existing_available |available|
@@ -267,13 +267,17 @@ The finite-state-machine model below represents these additional complexities.
 [Ansible]: https://www.ansible.com/
 [Arista EOS]: https://www.arista.com/en/products/eos
 [Embrionix REST]: https://www.embrionix.com/resource/emSFP-Restful-API-documentations
-
-<!-- TODO: try to find a generic MaaS reference -->
-[MaaS]: https://maas.io/docs
-
-[Ubuntu MaaS]: https://maas.io
-[GitHub metal cloud]: https://github.blog/2015-12-01-githubs-metal-cloud
 [CBC Embrionix GitHub]: https://github.com/cbcrc/ansible-embrionix
 [NMOS]: https://www.amwa.tv/nmos
 [PostgreSQL]: https://www.postgresql.org/
 [AMWA IS-04]: http://amwa-tv.github.io/nmos-discovery-registration/
+[AMWA BCP-003]: https://amwa-tv.github.io/nmos-api-security/
+[SSH]: https://www.ssh.com/ssh/
+[AMWA]: https://www.amwa.tv/
+[OAuth2](https://oauth.net/2/)
+[OAuth2 O2L]: (https://oauth.net/2/grant-types/client-credentials/)
+
+<!-- TODO: try to find a generic MaaS reference -->
+[MaaS]: https://maas.io/docs
+[Ubuntu MaaS]: https://maas.io
+[GitHub metal cloud]: https://github.blog/2015-12-01-githubs-metal-cloud
