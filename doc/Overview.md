@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Metal as a Service ([Maas]) and Infrastructure as Code ([IaC]) methodologies have emerged as best practices for deploying, configuring, and managing IT data center resources. Combined, they bring reliability, efficiency, and scale to the process of deploying and configuring servers, networks, authentication and security infrastructure, and application software services. Applying these IT industry best practices to media facilities brings the same benefits but demands adaptation to the unique requirements of media facilities.
+Metal as a Service ([MaaS]) and Infrastructure as Code ([IaC]) methodologies have emerged as best practices for deploying, configuring, and managing IT data center resources. Combined, they bring reliability, efficiency, and scale to the process of deploying and configuring servers, networks, authentication and security infrastructure, and application software services. Applying these IT industry best practices to media facilities brings the same benefits but demands adaptation to the unique requirements of media facilities.
 
 MaaS and IaC methodologoies are built on top of long standing and very well understood standards. MaaS automation is built on a foundation of remote system management and network boot standards (i.e. [IPMI] and [PXE]). IaC is built on a foundation of secure shell interfaces for system access and well known scripting languages for configuration automation (e.g. [SSH] and [Python]). Binding these elements together to create a coherent deployment and configuration system is the job of a supervisory layer of software that is generically referred to as the "admin system" or "admin services". The admin system provides the human management interface from which resources are automatically allocated, deployed and configured. This admin system is new a component and is not built on long standing and very well understood standards.
 
@@ -87,7 +87,7 @@ Metal-as-a-Service ([MaaS]) refers to the automated provisioning of "bare-metal"
 * network configuration
 * decommissioning
 
-Metal-as-a-Service (MaaS) implementation patterns leverage very mature industry standards to automate system management and monitoring, network boot, IP address management. MaaS system leverage these standards by adding automation tooling and administration systems that support managing many system reliably and efficiently at production scale.
+Metal-as-a-Service (MaaS) implementation patterns leverage very mature industry standards to automate system management and monitoring, network boot, IP address management. MaaS systems leverage these standards by adding automation tooling and administration systems that support managing many system reliably and efficiently at production scale.
 
 | Standards | |
 |---|---|

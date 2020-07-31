@@ -1,5 +1,5 @@
 #
-# This a an imagined complex version of the statement. It adds a
+# This is an imagined complex version of the state machine. It adds a
 #  "reserved", "offline", and "error" states along with new
 #  transitions to tie these states into the model.
 #
