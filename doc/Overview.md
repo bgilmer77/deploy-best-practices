@@ -184,7 +184,7 @@ It is recommended that [AMWA] extend its security recommendations to include ser
 
 #### [CICD] use of service accounts
 
-Continuous integration and continuous delivery [CICD] methodologies are a natural extension of dynamic configuration and resource management practices. CICD encourages end-to-end, development-to-deployment, automation. CICD best practices require services-accounts to provide secure and reliable access to production systems. CICD methodologies mix user account authorization for development with service account authorization for deployment. Clear distinction between the two account types contributes to reliable and safe production deployment.
+Continuous Integration and Continuous Delivery [CICD] methodologies are a natural extension of dynamic configuration and resource management practices. CICD encourages end-to-end, development-to-deployment, automation. CICD best practices require services-accounts to provide secure and reliable access to production systems. CICD methodologies mix user account authorization for development with service account authorization for deployment. Clear distinction between the two account types contributes to reliable and safe production deployment.
 
 ## Appendix - Resource State Model: Example fuller representation
 
