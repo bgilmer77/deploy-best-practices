@@ -27,7 +27,7 @@ Resource management is represented using a simple life-cycle state model. A "res
 |released| Resource is no longer active in production. |
 |retired | Resource is ready to be removed from the facility. |
 
-Note that configuration happens in order to enter both the "staged" and the "committed" stage. Therefore resources may be considered to have two-phase configuration. This matches the deployment and configuration strategies used in some data centers where pools of servers with operating systems installed are "staged" ahead of time. Later, on demand, they recieve final configuration to meet a particular role before being "committed" to production. Other use cases that require two-phase configuration can be envisioned. If a simple resource only requires a single phase of configuration then staging is optional.
+Note that configuration happens in both the "staged" and the "committed" stage. Therefore resources may be considered to have two-phase configuration. This matches the deployment and configuration strategies used in some data centers where pools of servers with operating systems installed are "staged" ahead of time. Later, on demand, they recieve final configuration to meet a particular role before being "committed" to production. Other use cases that require two-phase configuration can be envisioned. If a simple resource only requires a single phase of configuration then staging is optional.
 
 ## Resource Management as a State Machine
 
